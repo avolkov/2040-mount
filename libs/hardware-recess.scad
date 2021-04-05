@@ -13,6 +13,7 @@
  */
 
 // Common mounting patterns
+ear_thick=8;
 stacked_len = ear_thick*3;
 screw_mount_space = 20;
 screw_mount_offset =7;
