@@ -1,5 +1,18 @@
 include <../libs/hardware-recess.scad>;
 
+/*
+ * Adapter for Simple Microphone Pop filter -- https://www.thingiverse.com/thing:1108999
+ * and Ammon MS-12 Mini Foldable Desktop Microphone Stand
+ *
+ * Project URL
+ * https://github.com/avolkov/openscad-designs/pop-filter-holder
+ *
+ * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
+ * https://creativecommons.org/licenses/by-sa/4.0/
+ *
+ * Version 1.0 2021-04-05 Initial publication
+ */
+
 MOUNT_H = 15;
 MOUNT_W = 12;
 
