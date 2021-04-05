@@ -1,11 +1,15 @@
 /*
- * A library to make capture holes in material for M3 & M5 hardware and some common mounting patterns.
+ * A library to make capture holes in material for M3 & M5 hardware and some
+ * common mounting patterns.
  * Copyright 2021 Alex Volkov <alex@flamy.ca>
- * 
+ *
+ * Project URL
+ * https://github.com/avolkov/openscad-designs
+ *
  * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
  * https://creativecommons.org/licenses/by-sa/4.0/
  *
- * Version 0.1 2021-04-05 Initial publication  
+ * Version 0.1 2021-04-05 Initial publication
  */
 
 // Common mounting patterns
@@ -40,7 +44,7 @@ module bolt_nut(hole_len, bolt_d, flip=false){
     /*
     Create a model for a hole with bolt end on one end and nut hole on the other end.
     Note, this functions doesn't subtract the model it only makes the model
-    
+
     :hole_len: total length of the hole
     :bolt_d: diameter of a blot
     :flip: flip the side with bolt recess
@@ -68,7 +72,7 @@ module hole_w_end(hole_len, trap_height, type, bolt_d, flip=false){
     /*
     Make a hole with an end for bolt or a nut.
     This is a more generic functions replacing m5_ hole-making functions.
-    
+
     :bolt_d: bolt diameter, i.e. 3, 5 mm
     :type: type of the head hole: 'none', 'hex', 'round
     */
@@ -108,7 +112,7 @@ module m_recess(length, end_type, bolt_d) {
 
 module make_recess(height, end_type, trap_d){
     /*
-    Make recess to capture 
+    Make recess to capture
     */
     rotate([0, 0,90]){
         if (end_type == "hex"){
