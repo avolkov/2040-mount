@@ -1,3 +1,8 @@
+/* Copyright 2021 Alex Volkov <alex@flamy.ca>
+ * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
+ * https://creativecommons.org/licenses/by-sa/4.0/
+ */
+
 include <../libs/hardware-recess.scad>;
 $fn=30;
 
