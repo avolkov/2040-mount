@@ -50,7 +50,7 @@ module top_bracket() {
     difference(){
         cube([55, 2, 13]);
         translate([3,5, -1])
-            fan_mount();
+            fan_mount(0);
         translate([4, 5, 7])
             rotate([90, 0, 0])
                 cylinder(d=m3_d, h=5);
@@ -60,6 +60,7 @@ module top_bracket() {
     }
 }
 
-//top_bracket();
-//translate([-36,  8, -3])
+translate([0,50,0])
+    rotate([90, 0, 0])
+        top_bracket();
 bottom_bracket(15);
