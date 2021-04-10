@@ -1,5 +1,10 @@
-// Board dimensions
-// cube([142, 83, 2]);
+/* Main board mount model
+ * Copyright 2021 Alex Volkov <alex@flamy.ca>
+ * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
+ * https://creativecommons.org/licenses/by-sa/4.0/
+ *
+ * Version 1.0 2021-04-10 Initial publication
+ */
 
 include <../libs/hardware-recess.scad>;
 $fn=30;
