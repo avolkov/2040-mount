@@ -60,7 +60,7 @@ module top_bracket() {
     }
 }
 
-translate([0,50,0])
+translate([0,35,0])
     rotate([90, 0, 0])
         top_bracket();
 bottom_bracket(15);
