@@ -23,5 +23,5 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Project URL
 ===========
 
-https://github.com/avolkov/openscad-designs/articulated-mount
+https://github.com/avolkov/openscad-designs/tree/master/mks-gen-2040-mount
  
