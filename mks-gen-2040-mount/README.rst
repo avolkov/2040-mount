@@ -51,6 +51,7 @@ Attaching the bank to the main body:
 * 3x M3 nut
 
 Mounting fans to the bracket:
+
 * 10x M3 12mm capscrew (moun)
 * 10x M3 nut
 
