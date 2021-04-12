@@ -3,6 +3,7 @@
  * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
  * https://creativecommons.org/licenses/by-sa/4.0/
  *
+ * TODO: Combine MKS & SKR common code in a single library
  * Version 1.1 2020-04-12 Backporting changes from skr_14_turbo, making code more generic
  * Version 1.0 2021-04-10 Initial publication
  */
@@ -160,9 +161,11 @@ difference(){
     // mounting holes for the daughter board
     translate([5, mount_offset, 0]) daughter_board_mount(5);
     translate([65, mount_offset, 0]) daughter_board_mount(5);
-    translate([8, board_w/2 + mount_offset/2, 0]) mount_holes(5);
     translate([
-        board_h + plate_extra_h - 8 ,
+        8, // mounting holes offset for cable mgmt, top
+        board_w/2 + mount_offset/2, 0]) mount_holes(5);
+    translate([
+        board_h + plate_extra_h - 8 , // mounting holes offset for cable mgmt, bottom
         board_w/2 + mount_offset/2, 0]) mount_holes(5);
 }
 difference(){
