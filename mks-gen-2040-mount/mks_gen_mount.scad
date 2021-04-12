@@ -3,17 +3,25 @@
  * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
  * https://creativecommons.org/licenses/by-sa/4.0/
  *
+ * Version 1.1 2020-04-12 Backporting changes from skr_14_turbo, making code more generic
  * Version 1.0 2021-04-10 Initial publication
  */
 
 include <../libs/hardware-recess.scad>;
 $fn=30;
 
-mks_gen_len = 143;
-mks_gen_width = 84;
+board_h = 143;
+board_w = 84;
+
+mount_h = 135.5;
+mount_w = 76;
 
 daughter_board_offset = 20;
 peg_h = 8;
+fan_rail_offset = 17;
+peg_h = 8;
+cable_mgmt_offset = 8; // offset for mounting cable management accessories
+plate_extra_h = 10;
 
 module daughter_board_mount(bolt_l){
     translate([daughter_board_offset, 9.5, 0]) hole_w_end(bolt_l, m3_nut_thick, "round", m3_bolt_thick);
@@ -41,7 +49,7 @@ module fan_mount(bolt_l, extra_nut_len=0){
 
 module mount_4020(wall_thick){
     rail1_offset = 7;
-    rail2_offset = 27; 
+    rail2_offset = 27;
     m5_r = 2.5;
     mount_rails_d = 6.4;
     m5_head_len_offset = 5;
@@ -50,22 +58,22 @@ module mount_4020(wall_thick){
         // mount plate
         union() {
             // mount ridge
-            cube([mks_gen_len + 10, wall_thick, 40]);
+            cube([board_h + plate_extra_h, wall_thick, 40]);
             translate([0, 2.7, rail1_offset + m5_r])
                 rotate([0, 90, 0]){
                     translate([-3.3,-3,0])
-                    cube([mount_rails_d, 5, mks_gen_len + 10]);
+                    cube([mount_rails_d, 5, board_h + plate_extra_h]);
                 }
-                    //cylinder(d=mount_rails_d, h=mks_gen_len + 10, $fn=6);
+                    //cylinder(d=mount_rails_d, h=plate_extra_h + 10, $fn=6);
             // mount ridge
             translate([0, 2.7, rail2_offset + m5_r])
                 rotate([0, 90, 0])
                     translate([-3.3,-3,0])
-                        cube([mount_rails_d, 5, mks_gen_len + 10]);
-                    //cylinder(d=mount_rails_d, h=mks_gen_len + 10, $fn=6);
+                        cube([mount_rails_d, 5, board_h + 10]);
+                    //cylinder(d=mount_rails_d, h=board_h + 10, $fn=6);
             // Connector to the rest of the board
             translate([0,5,5])
-                rotate([-45, 0, 0])cube([mks_gen_len + 10, 7, 5]);
+                rotate([-45, 0, 0])cube([board_h + plate_extra_h, 7, 5]);
         }
         // mounting holes to 2040 rail
         translate([25, wall_thick + m5_bolt_offset, rail2_offset + m5_r] ){
@@ -77,7 +85,7 @@ module mount_4020(wall_thick){
                     5.3,
                     flip=true);
         }
-        
+
         translate([25, wall_thick + m5_head_len_offset + m5_bolt_offset + 2, 9.5]){
             rotate([90, 0, 0])
                 hole_w_end(
@@ -87,12 +95,12 @@ module mount_4020(wall_thick){
                     5.3,
                     flip=true);
         }
-        
-        translate([145 - 17, wall_thick + m5_bolt_offset, rail2_offset + m5_r]){
+
+        translate([board_h - fan_rail_offset, wall_thick + m5_bolt_offset, rail2_offset + m5_r]){
             rotate([90, 0, 0])
                 hole_w_end(wall_thick+5+m5_bolt_offset, 5, "round", 5.3, flip=true);
         }
-        translate([145 - 17, wall_thick + m5_head_len_offset + m5_bolt_offset + 2, 9.5]){
+        translate([board_h - fan_rail_offset, wall_thick + m5_head_len_offset + m5_bolt_offset + 2, 9.5]){
             rotate([90, 0, 0])
                 hole_w_end(
                     wall_thick+m5_head_len_offset*2+m5_bolt_offset,
@@ -104,39 +112,35 @@ module mount_4020(wall_thick){
     }
 }
 
-module mksgen_plate(mount_offset) {
+module board_plate(mount_offset) {
     plate_thick = 4;
-    cube([mks_gen_len + 10, mks_gen_width + mount_offset + 2, plate_thick]);
+    cube([board_h + 10, board_w + mount_offset + 2, plate_thick]);
     translate([0, 2, 0]){
         translate([8, mount_offset, 0]) cylinder(d=8, h=peg_h);
         translate([8, mount_offset, 0]) cylinder(d=8, h=peg_h);
-        translate([135.5 + 8, mount_offset, 0]) cylinder(d=8, h=peg_h);
-        translate([8, mount_offset + 76, 0]) cylinder(d=8, h=peg_h);
-        translate([135.5 + 8, mount_offset + 76, 0]) cylinder(d=8, h=peg_h);
+        translate([mount_h + 8, mount_offset, 0]) cylinder(d=8, h=peg_h);
+        translate([8, mount_offset + mount_w, 0]) cylinder(d=8, h=peg_h);
+        translate([mount_h + 8, mount_offset + mount_w, 0]) cylinder(d=8, h=peg_h);
     }
 }
 
 
-module mount_mksgen(mount_offset){
-    
-    difference(){ 
-        mksgen_plate(mount_offset);
+module mount_skr(mount_offset){
+    difference(){
+        board_plate(mount_offset);
         // offset mounting holes by 2mm to let the board fit
+
         translate([0, 2, 0]){
-            // mounting holes for mks
+            // mounting holes for the board
             translate([8, mount_offset, 0])
                 hole_w_end(peg_h, m3_nut_thick, "hex", m3_bolt_thick, flip=true);
-            translate([135.5 + 8, mount_offset, 0])
+            translate([mount_h + 8, mount_offset, 0])
                 hole_w_end(peg_h, m3_nut_thick, "hex", m3_bolt_thick, flip=true);
-            translate([8, mount_offset + 76, 0])
+            translate([8, mount_offset + mount_w, 0])
                 hole_w_end(peg_h, m3_nut_thick, "hex", m3_bolt_thick, flip=true);
-            translate([135.5 + 8, mount_offset + 76, 0])
+            translate([mount_h + 8, mount_offset + mount_w, 0])
                 hole_w_end(peg_h, m3_nut_thick, "hex", m3_bolt_thick, flip=true);
-            // mounting holes for the daughter board
-            translate([5, mount_offset, 0])
-                daughter_board_mount(5);
-            translate([65, mount_offset, 0])
-                daughter_board_mount(5);
+            
         }
     }
 }
@@ -150,11 +154,16 @@ module wiring(){
 }
 */
 
+// Setting up skr and mount holes
 difference(){
     mount_offset = 18;
-    mount_mksgen(mount_offset);
-    translate([8, 76/2 + mount_offset/2, 0]) mount_holes(5);
-    translate([135.5 + 8, 76/2 + mount_offset/2, 0]) mount_holes(5);
+    mount_skr(mount_offset);
+    // mounting holes for the daughter board
+    translate([20, mount_offset, 0]) daughter_board_mount(5);
+    translate([8, board_w/2 + mount_offset/2, 0]) mount_holes(5);
+    translate([
+        board_h + plate_extra_h - 8 ,
+        board_w/2 + mount_offset/2, 0]) mount_holes(5);
 }
 difference(){
     wall_thick = 9;
