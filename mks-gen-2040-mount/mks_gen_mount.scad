@@ -17,7 +17,6 @@ mount_h = 135.5;
 mount_w = 76;
 
 daughter_board_offset = 20;
-peg_h = 8;
 fan_rail_offset = 17;
 peg_h = 8;
 cable_mgmt_offset = 8; // offset for mounting cable management accessories
@@ -159,7 +158,8 @@ difference(){
     mount_offset = 18;
     mount_skr(mount_offset);
     // mounting holes for the daughter board
-    translate([20, mount_offset, 0]) daughter_board_mount(5);
+    translate([5, mount_offset, 0]) daughter_board_mount(5);
+    translate([65, mount_offset, 0]) daughter_board_mount(5);
     translate([8, board_w/2 + mount_offset/2, 0]) mount_holes(5);
     translate([
         board_h + plate_extra_h - 8 ,
