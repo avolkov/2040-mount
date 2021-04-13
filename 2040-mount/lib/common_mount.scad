@@ -93,12 +93,12 @@ module mount_4020(wall_thick){
                     flip=true);
         }
 
-        translate([board_h - fan_rail_offset, wall_thick + m5_bolt_offset, rail2_offset + m5_r]){
+        translate([second_2040_mount, wall_thick + m5_bolt_offset, rail2_offset + m5_r]){
             rotate([90, 0, 0])
                 hole_w_end(wall_thick+5+m5_bolt_offset, 5, "round", m5_d, flip=true);
         }
         translate([
-            board_h - fan_rail_offset,
+            second_2040_mount,
             wall_thick + m5_head_len_offset + m5_bolt_offset + 2,
             z_offset]){
                 rotate([90, 0, 0])
