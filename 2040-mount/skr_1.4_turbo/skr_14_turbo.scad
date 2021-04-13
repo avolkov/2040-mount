@@ -3,7 +3,7 @@
  * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
  * https://creativecommons.org/licenses/by-sa/4.0/
  *
- * TODO: Combine MKS & SKR common code in a single library
+ * Version 0.2 2021-04-12 Refactor to use common library with MKS GEN code
  * Version 0.1 2021-04-12 Initial publication
  */
 
