@@ -9,7 +9,7 @@
  * Version 1.0 2021-04-10 Initial publication
  */
 
- include <common_mount.scad>;
+ include <../lib/common_mount.scad>;
 
 
 $fn=30;
