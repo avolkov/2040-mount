@@ -3,7 +3,6 @@
  * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
  * https://creativecommons.org/licenses/by-sa/4.0/
  *
- * TODO: Combine MKS & SKR common code in a single library
  * Version 1.2 2020-04-12 Refactoring for the board to use common code
  * Version 1.1 2020-04-12 Backporting changes from skr_14_turbo, making code more generic
  * Version 1.0 2021-04-10 Initial publication
