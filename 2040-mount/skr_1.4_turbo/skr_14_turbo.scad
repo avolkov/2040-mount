@@ -19,7 +19,7 @@ mount_w = 76.30;
 
 /* Custom offset */
 plate_extra_h = 10; //extra length for the plate
-fan_rail_offset = 10;
+fan_rail_offset = 9; // offset of second set of 2040 mounting holes from the fan
 daughter_board_offset = 20;
 peg_h = 8;
 cable_mgmt_offset = 8; // offset for mounting cable management accessories

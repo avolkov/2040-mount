@@ -24,7 +24,7 @@ module fan_mount(duct_len){
 
 
 
-module bottom_bracket(mount_offset, fan_count=3) {
+module bottom_bracket(mount_offset, bolt_cutout_1, bolt_cutout_2, fan_count=3, ) {
     //fan mounts on the side of the board 
     //mount_offset --  Offset between board mounting screws and board for mounting fans
     difference(){
@@ -41,9 +41,10 @@ module bottom_bracket(mount_offset, fan_count=3) {
             translate([39, 0, 0])fan_mount(mount_offset);
         if (fan_count > 2)
             translate([79, 0, 0])fan_mount(mount_offset);
-        
-        translate([26, 18, 0])cylinder(d=14, h=5);
-        translate([126, 19, 0])cylinder(d=14, h=5);
+        if (bolt_cutout_1)
+            translate(bolt_cutout_1)cylinder(d=m5_bolt_head_d + 2, h=5);
+        if (bolt_cutout_2)
+            translate(bolt_cutout_2)cylinder(d=m5_bolt_head_d + 2, h=5);
     }
 }
 

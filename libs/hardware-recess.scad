@@ -38,7 +38,7 @@ m5_nut_thick = 4;
 m5_locknut_thick = 5;
 nut_trap_d = 9.7;
 bolt_head_d = 8.6;
-
+m5_bolt_head_d = bolt_head_d;
 
 
 module bolt_nut(hole_len, bolt_d, flip=false){
