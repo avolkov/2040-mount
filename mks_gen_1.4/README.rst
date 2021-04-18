@@ -1,5 +1,5 @@
- 
- 
+
+
 Overview
 ========
 
@@ -55,14 +55,18 @@ Mounting fans to the bracket:
 * 10x M3 12mm capscrew (moun)
 * 10x M3 nut
 
+
+
 License
 =======
 
 License: Attribution-ShareAlike 4.0 International (CC BY-SA)
 https://creativecommons.org/licenses/by-sa/4.0/
 
-Project URL
-===========
+Project URLs
+============
 
-https://github.com/avolkov/openscad-designs/tree/master/mks-gen-2040-mount
- 
+https://github.com/avolkov/2040-mount/tree/master/mks_gen_1.4
+
+TODO: Add prusaprints url
+
