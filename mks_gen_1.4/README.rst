@@ -68,6 +68,7 @@ License
 =======
 
 License: Attribution-ShareAlike 4.0 International (CC BY-SA)
+
 https://creativecommons.org/licenses/by-sa/4.0/
 
 Project URLs
