@@ -3,13 +3,13 @@
  * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
  * https://creativecommons.org/licenses/by-sa/4.0/
  *
- * TODO: Refactor so all the common values are coming from the same file
+ * TODO: Combine MKS & SKR common code in a single library
  * Version 1.2 2020-04-12 Refactoring for the board to use common code
  * Version 1.1 2020-04-12 Backporting changes from skr_14_turbo, making code more generic
  * Version 1.0 2021-04-10 Initial publication
  */
 
-include <../lib/common_mount.scad>;
+ include <common_mount.scad>;
 include <variables.scad>;
 
 $fn=30;
@@ -23,6 +23,7 @@ mount_w = 76;
 
 /* custom offsets*/
 daughter_board_offset = 20;
+fan_rail_offset = 17;
 peg_h = 8;
 cable_mgmt_offset = 8; // offset for mounting cable management accessories
 plate_extra_h = 10;

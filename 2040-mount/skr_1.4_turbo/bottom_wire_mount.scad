@@ -13,9 +13,9 @@ include <../lib/common_wire_mount.scad>
 module bottom_wire_holder(){
     inner_pipe_d = 12;
     outer_d = 20;
-    vert_pipe_offset = 80;
+    vert_pipe_offset = 70;
     vert_pipe_len = 40;
-    heated_bed_connector = 180;
+    heated_bed_connector = 160;
     heated_bed_conn_offset = 20;
     bottom_shave_offset = 2;
     difference(){

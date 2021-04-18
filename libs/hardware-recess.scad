@@ -12,7 +12,7 @@
  * Version 0.1 2021-04-05 Initial publication
  */
 
-// Common mounting patterns
+ // Common mounting patterns
 ear_thick=8;
 stacked_len = ear_thick*3;
 screw_mount_space = 20;

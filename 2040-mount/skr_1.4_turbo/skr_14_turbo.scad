@@ -7,6 +7,7 @@
  * Version 0.1 2021-04-12 Initial publication
  */
 
+include <variables.scad>;
 include <../lib/common_mount.scad>;
 $fn=30;
 
@@ -19,7 +20,6 @@ mount_w = 76.30;
 
 /* Custom offset */
 plate_extra_h = 10; //extra length for the plate
-second_2040_mount = 102; // offset of second set of 2040 mounting holes from the fan
 daughter_board_offset = 20;
 peg_h = 8;
 cable_mgmt_offset = 8; // offset for mounting cable management accessories
