@@ -1,10 +1,17 @@
-
-
 Overview
 ========
 
 This mount adapts MKS GEN 1.4 to 2040 aluminum extrusion. I built this with Bear Upgrade in mind, but it should also mount anywhere. This mount also provides means of attaching two 5x7cm daughter boards at the back, cable management for the extruder, heated bed and misc wiring at the bottom, it supports a fan bank with up to 3x 40mm fans.
 
+Images
+======
+
+.. image:: images/board_front.jpg
+    :alt: Photo of bear upgrade frame with MKS GEN 1.4 mounted on it
+
+
+.. image:: images/board_side.jpg
+    :alt: Closeup photo of MKS GEN 1.4 board mounted on Bear Upgrade frame
 
 BOM
 ===
