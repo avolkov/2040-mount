@@ -20,4 +20,4 @@ Proven designs
 Work in progress
 ================
 
-* * `BTT SKR 1.4 Turbo <skr_1.4_turbo/README.rst>`_
+* `BTT SKR 1.4 Turbo <skr_1.4_turbo/README.rst>`_
