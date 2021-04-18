@@ -6,11 +6,9 @@
  *
  */
 
- // TODO: rename daughter board mount to 5x7 board mount
- include <../../libs/hardware-recess.scad>;
+include <hardware-recess.scad>;
 
-
- module board_5x7_mount(bolt_l){
+module board_5x7_mount(bolt_l){
     x_dim = 40.5;
     y_dim = 65;
     const_offset = 9.5;

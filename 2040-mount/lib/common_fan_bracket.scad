@@ -1,4 +1,4 @@
-include <../../libs/hardware-recess.scad>;
+include <hardware-recess.scad>;
 
 
 fan_d=35;
@@ -25,7 +25,7 @@ module fan_mount(duct_len){
 
 
 module bottom_bracket(mount_offset, bolt_cutout_1, bolt_cutout_2, fan_count=3, ) {
-    //fan mounts on the side of the board 
+    //fan mounts on the side of the board
     //mount_offset --  Offset between board mounting screws and board for mounting fans
     difference(){
         union(){
