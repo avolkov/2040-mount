@@ -31,11 +31,11 @@ module mount_holes(bolt_l){
 module fan_mount(bolt_l, extra_nut_len=0){
     rotate([270, 0, 0]){
         translate([13, 0,1])
-            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][1], flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M3, flip=true);
         translate([55, 0,1])
-            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][1], flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M3, flip=true);
         translate([95, 0,1])
-            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][1], flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M3, flip=true);
     }
 }
 
@@ -46,7 +46,7 @@ module mount_4020(wall_thick){
     m5_head_len_offset = 5;
     m5_bolt_offset = 2;
 
-    z_offset = 9.5; //???
+
     difference(){
         // mount plate
         union() {
