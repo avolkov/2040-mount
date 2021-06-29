@@ -45,8 +45,6 @@ module mount_4020(wall_thick){
     mount_rails_d = 6.4;
     m5_head_len_offset = 5;
     m5_bolt_offset = 2;
-
-
     difference(){
         // mount plate
         union() {
