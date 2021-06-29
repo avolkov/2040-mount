@@ -13,29 +13,29 @@ module board_5x7_mount(bolt_l){
     y_dim = 65;
     const_offset = 9.5;
     translate([daughter_board_offset, const_offset, 0])
-        hole_w_end(bolt_l, m3_nut_thick, "round", m3_bolt_thick);
+        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
     translate([daughter_board_offset, const_offset + y_dim, 0])
-        hole_w_end(bolt_l, m3_nut_thick, "round", m3_bolt_thick);
+        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
     translate([daughter_board_offset + x_dim, const_offset, 0])
-        hole_w_end(bolt_l, m3_nut_thick, "round", m3_bolt_thick);
+        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
     translate([daughter_board_offset + x_dim, const_offset + y_dim, 0])
-        hole_w_end(bolt_l, m3_nut_thick, "round", m3_bolt_thick);
+        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
 }
 
 
 module mount_holes(bolt_l){
-    hole_w_end(bolt_l, m3_nut_thick, "round", m3_bolt_thick);
-    translate([0, 20, 0]) hole_w_end(bolt_l, m3_nut_thick, "round", m3_bolt_thick);
+    hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
+    translate([0, 20, 0]) hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
 }
 
 module fan_mount(bolt_l, extra_nut_len=0){
     rotate([270, 0, 0]){
         translate([13, 0,1])
-            hole_w_end(bolt_l, m3_nut_thick+extra_nut_len, "hex", m3_bolt_thick, flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][1], flip=true);
         translate([55, 0,1])
-            hole_w_end(bolt_l, m3_nut_thick+extra_nut_len, "hex", m3_bolt_thick, flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][1], flip=true);
         translate([95, 0,1])
-            hole_w_end(bolt_l, m3_nut_thick+extra_nut_len, "hex", m3_bolt_thick, flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][1], flip=true);
     }
 }
 
@@ -74,7 +74,7 @@ module mount_4020(wall_thick){
         translate([25, wall_thick + m5_bolt_offset, rail2_offset + m5_r] ){
             rotate([90, 0, 0])
                 hole_w_end(
-                    m5_nut_thick + m5_head_len_offset + 4,
+                    M_DIM[5][4] + m5_head_len_offset + 4,
                     5,
                     "round",
                     m5_d,
@@ -85,7 +85,7 @@ module mount_4020(wall_thick){
             rotate([90, 0, 0])
                 hole_w_end(
                     wall_thick + m5_head_len_offset * 2 + m5_bolt_offset,
-                    m5_nut_thick + m5_head_len_offset + 3,
+                    M_DIM[5][4] + m5_head_len_offset + 3,
                     "round",
                     m5_d,
                     flip=true);
@@ -102,7 +102,7 @@ module mount_4020(wall_thick){
                 rotate([90, 0, 0])
                     hole_w_end(
                         wall_thick + m5_head_len_offset * 2 + m5_bolt_offset,
-                        m5_nut_thick + m5_head_len_offset + 3,
+                        M_DIM[5][4] + m5_head_len_offset + 3,
                         "round",
                         m5_d,
                         flip=true);
@@ -131,13 +131,13 @@ module mount_board(mount_offset){
         translate([0, 2, 0]){
             // mounting holes for the board
             translate([8, mount_offset, 0])
-                hole_w_end(peg_h, m3_nut_thick, "hex", m3_bolt_thick, flip=true);
+                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][1], flip=true);
             translate([mount_h + 8, mount_offset, 0])
-                hole_w_end(peg_h, m3_nut_thick, "hex", m3_bolt_thick, flip=true);
+                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][1], flip=true);
             translate([8, mount_offset + mount_w, 0])
-                hole_w_end(peg_h, m3_nut_thick, "hex", m3_bolt_thick, flip=true);
+                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][1], flip=true);
             translate([mount_h + 8, mount_offset + mount_w, 0])
-                hole_w_end(peg_h, m3_nut_thick, "hex", m3_bolt_thick, flip=true);
+                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][1], flip=true);
 
         }
     }

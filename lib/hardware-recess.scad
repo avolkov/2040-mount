@@ -9,6 +9,7 @@
  * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
  * https://creativecommons.org/licenses/by-sa/4.0/
  *
+ * Version 0.2 2021-05-26 Refactoring variables into M_DIM list
  * Version 0.1 2021-04-05 Initial publication
  */
 
@@ -21,25 +22,91 @@ total_len = stacked_len + screw_mount_space*2;
 mounting_diff = 8;
 
 
-//Globals for hardware diameters
-M3_THREAD_RAD = 1.5;
-M5_THREAD_RAD = 2.6;
+ALU_PROFILE_H = 6.5;
+
+// List defined hardware
+M3 = 3;
+M4 = 4;
+M5 = 5;
+M8 = 8;
+
+// Dimensional info for metric capscrew hardware
+//             [0,      1,            2,     3,          4,     5        ]
+// List values [bolt_d, bolt_head_d, bolt_h, nut_trap_d, nut_h, locknut_h]
+M_DIM = [
+    [], // spacing
+    [], // M1
+    [], // M2
+    [3.2, 5.6, 3.2, 6.7, 2.4, 3], // M3
+    [4.1, 7.1, 4.05, 9.0, 3.9, 4], // M4
+    [5.2, 8.6, 4.90, 9.7, 4, 5],  // M5
+    [], // M6
+    [], // M7
+    [8.1, 13.1, 7.98, 14.6, 6.3, 8] // M8
+];
 
 
-m3_nut_trap_d = 6.7;
-m3_nut_thick= 2.4;
+function get_trap_d(head_type, bolt) =(head_type == "round") ? M_DIM[bolt][1]
+    : (head_type == "hex") ? M_DIM[bolt][3] : M_DIM[bolt[0]];
 
-//M3 fastener values
-m3_bolt_head_d = 5.6;
-m3_bolt_thick = 3.2;
+module m_recess(length, end_type, bolt_d) {
+    /*
+    Create nut or bolt capture hole
 
-//M5 fastener values
-m5_nut_thick = 4;
-m5_locknut_thick = 5;
-nut_trap_d = 9.7;
-bolt_head_d = 8.6;
-m5_bolt_head_d = bolt_head_d;
+    :height: length of a mounting hole, including end-mounting hardware
+    :end_type: type of the head hole: 'none', 'hex', 'round
+    :bolt_d: bolt diameter, i.e. 3, 5 mm
+    */
+    make_recess(length, end_type, M_DIM[bolt_d][1]);
 
+}
+
+module make_recess(height, end_type, head_d){
+    /*
+    Make recess to capture
+    */
+    outer_chamfer = 1.2;
+    local_fn = 60;
+    rotate([0, 0,90]){
+        if (end_type == "hex"){
+            cylinder(h=height, d=head_d, $fn=6);
+        } else if (end_type == "round"){
+            cylinder(h=height/2, d=head_d + outer_chamfer, $fn=local_fn);
+            translate([0,0, height/2])
+                cylinder(
+                    h=height/2 + 0.1,
+                    d1=head_d + outer_chamfer,
+                    d2=head_d, $fn=local_fn);
+        }
+    }
+}
+
+
+// There's a bug in this function when it comes to calculation trap len /bolt len
+module hole_w_end(hole_len, trap_height, type, bolt_d, flip=false){
+    /*
+    Make a hole with an end for bolt or a nut.
+    This is a more generic functions replacing m5_ hole-making functions.
+
+    :bolt_d: bolt diameter, i.e. 3, 5 mm
+    :type: type of the head hole: 'none', 'hex', 'round'
+    */
+    if (type != "none"){
+        cylinder(h=hole_len-trap_height, d=M_DIM[bolt_d][0], $fn=20);
+        if (flip){
+            make_recess(trap_height, type, get_trap_d(type, bolt_d));
+            translate([0,0,trap_height])
+                cylinder(h=hole_len-trap_height, d=M_DIM[bolt_d][0], $fn=20);
+
+        } else {
+                translate([0,0, hole_len])
+                    rotate([0,180,0])
+                        make_recess(trap_height, type, get_trap_d(type, bolt_d));
+        }
+    } else {
+        cylinder(h=hole_len, d=bolt_d);
+    }
+}
 
 module bolt_nut(hole_len, bolt_d, flip=false){
     /*
@@ -52,109 +119,45 @@ module bolt_nut(hole_len, bolt_d, flip=false){
     */
     // currently only implemented for 3mm
     if (flip){
-        hole_w_end(hole_len, m3_nut_thick, "hex", bolt_d);
+        hole_w_end(hole_len, M_DIM[bolt_d][4], "hex", M_DIM[bolt_d][0]);
         translate([0,0, hole_len]){
             rotate([180, 0, 0]){
-                hole_w_end(hole_len, m3_bolt_thick, "round", bolt_d);
+                hole_w_end(hole_len, M_DIM[bolt_d][2], "round", M_DIM[bolt_d][0]);
             }
         }
     } else {
-        hole_w_end(hole_len, m3_bolt_thick, "round", bolt_d);
+        hole_w_end(hole_len, M_DIM[bolt_d][2], "round", M_DIM[bolt_d][0]);
         translate([0,0, hole_len]){
             rotate([180, 0, 0]){
-                hole_w_end(hole_len, m3_nut_thick, "hex", bolt_d);
+                hole_w_end(hole_len, M_DIM[bolt_d][4], "hex", M_DIM[bolt_d][0]);
             }
         }
     }
 }
 
 
-module hole_w_end(hole_len, trap_height, type, bolt_d, flip=false){
-    /*
-    Make a hole with an end for bolt or a nut.
-    This is a more generic functions replacing m5_ hole-making functions.
 
-    :bolt_d: bolt diameter, i.e. 3, 5 mm
-    :type: type of the head hole: 'none', 'hex', 'round
-    */
-    if (type != "none"){
-        cylinder(h=hole_len-trap_height, d=bolt_d, $fn=20);
-        if (flip){
-            m_recess(trap_height, type, bolt_d);
-            translate([0,0,trap_height])
-                cylinder(h=hole_len-trap_height, d=bolt_d, $fn=20);
 
-        } else {
-                translate([0,0, hole_len - trap_height])
-                    m_recess(trap_height, type, bolt_d);
-        }
-    } else {
-        cylinder(h=hole_len, d=bolt_d);
-    }
-}
-
-module m_recess(length, end_type, bolt_d) {
-    /*
-    Create nut or bolt capture hole
-
-    :height: length of a mounting hole, including end-mounting hardware
-    :end_type: type of the head hole: 'none', 'hex', 'round
-    :bolt_d: bolt diameter, i.e. 3, 5 mm
-    */
-    if (bolt_d >= 3 && bolt_d <= 4){
-        //M3
-        make_recess(length, end_type, m3_nut_trap_d);
-    } else if (bolt_d >= 5 && bolt_d <= 6){
-        // M5
-        make_recess(length, end_type, nut_trap_d);
-    }
-
-}
-
-module make_recess(height, end_type, trap_d){
-    /*
-    Make recess to capture
-    */
-    rotate([0, 0,90]){
-        if (end_type == "hex"){
-            cylinder(h=height, d=trap_d, $fn=6);
-        } else if (end_type == "round"){
-            cylinder(h=height, d=trap_d, $fn=20);
-        }
-    }
-}
 
 
 //Functions specific to M5 size,
 // TODO rewrite as hole_w_end m_recess
 module m5_recess(height, end_type) {
     // nut/bolt capture hole
-    rotate([0, 0,90]){
-        if (end_type == "hex"){
-            cylinder(h=height, d=nut_trap_d, $fn=6);
-        } else if (end_type == "round"){
-            cylinder(h=height, d=nut_trap_d, $fn=20);
-        }
-    }
+    make_recess(height, end_type, M_DIM[5][0]);
 }
 
 
 
 module m5_hole_w_end(hole_len, trap_height, type){
     //Given hole lenght and trap height create a nut trap hole
-    if (type != "none"){
-        cylinder(h=hole_len-trap_height, d=5.3, $fn=20); // M5 hole;
-            translate([0,0, hole_len-trap_height])
-                m5_recess(trap_height, type);
-    } else {
-        cylinder(h=hole_len, d=5.3); // M5 hole;
-    }
+    hole_w_end(hole_len, trap_height, type, 5);
 }
 module m5_hole_w_ends(hole_len, nut_extra=0){
-    m5_hole_w_end(hole_len, m5_nut_thick, "round");
+    m5_hole_w_end(hole_len, M_DIM[5][2], "round");
     rotate([0, 180, 0])
         translate([0, 0, - hole_len])
-            m5_hole_w_end(hole_len, m5_nut_thick + nut_extra, "hex");
+            m5_hole_w_end(hole_len,M_DIM[5][4] + nut_extra, "hex");
 }
 
 module m3_hole_w_ends(hole_len, nut_extra=0){
@@ -172,29 +175,29 @@ module set_mounting_hole(x_offset, y_offset, thickness, nut_height, end_type){
     }
 }
 
+
 module m5_thread(height){
-    cylinder(h=height, r1=M5_THREAD_RAD, r2=M5_THREAD_RAD, center=true, $fn=16);
+    // TODO: Rewrite this with actual threads
+    cylinder(h=height, d=M_DIM[5][0], center=true, $fn=16);
 }
 
 module m3_thread(height){
-    cylinder(h=height, r1=M3_THREAD_RAD, r2=M3_THREAD_RAD, center=true, $fn=16);
+    // TODO: Rewrite this with actual threads
+    cylinder(h=height, d=M_DIM[3][0], center=true, $fn=16);
 }
 
 module m3_square_nut(depth, height){
     translate([0,0,1])
-        cylinder(
-        h=height, r1=M3_THREAD_RAD, r2=M3_THREAD_RAD, center=true, $fn=16);
+        cylinder(h=height, d=M_DIM[3][0], center=true, $fn=16);
 
-    m_recess(m3_nut_thick, "hex",3);
+    make_recess(M_DIM[3][4], "hex", M_DIM[3][0]);
     translate([0,0,-1])
-        cylinder(
-            h=depth, r1=M3_THREAD_RAD, r2=M3_THREAD_RAD, center=true, $fn=16);
+        cylinder(h=depth, d=M_DIM[3][0], center=true, $fn=16);
 }
 
 
 
 //Mounting Patterns
-
 module mounting_holes_2(fastener_len, nut_height, end_type){
     /* Two-hole mounting pattern for M5 bolts*/
     width_offsetn = 16;
@@ -246,4 +249,51 @@ module mounting_holes(fastener_len, nut_height, end_type){
         fastener_len,
         nut_height,
         end_type);
+}
+
+
+// Aluminium profile connectors
+
+module alu_profile(){
+    /* Make aluminium profile to be inserted into 2020 slot
+     * Taken from BU21-VS240 bear upgrade technical drawing
+     * Bear Frame 2.1 Upgrade Aluminium Extrusion rev 1.0
+     * Then taking out caliper and doing some math
+     * 6.25 mm is also distance from the bottom of the slot to the top.abs
+     * Which is the height of equalateral triangle. distance at the surfac
+     * is 7.22mm
+     */
+    gap_thick = 1.8;
+    gap_wide = 7.22;
+    gap_narrow = 6.25;
+
+    gap_offset = (gap_wide  - gap_narrow)/2;
+    polygon(points=[
+            [0,0],
+            [gap_thick, gap_offset],
+            [gap_thick, gap_narrow + gap_offset],
+            [0, gap_wide]
+        ]
+    );
+}
+
+
+module alu_connector(face_len, thickness, flip=false){
+
+    face_w = 20;
+    flat_gap = 5;
+    //TODO: Base can still be slightly increased 2020-06-24
+    alu_2020_base = 7.22;
+    cube([face_w, face_len, thickness]);
+    if (flip) {
+        translate([face_w/2 + alu_2020_base/2, 0, 0])
+            rotate([0,90,90])
+                linear_extrude(face_len)
+                    alu_profile();
+    } else {
+        translate([face_w/2 + alu_2020_base/2, face_len, thickness])
+            rotate([0,270,90])
+                linear_extrude(face_len)
+                    alu_profile();
+    }
 }
