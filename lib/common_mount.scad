@@ -40,8 +40,6 @@ module fan_mount(bolt_l, extra_nut_len=0){
 }
 
 module mount_4020(wall_thick){
-    rail1_offset = 7;
-    rail2_offset = 27;
     m5_r = 2.5;
     m5_d = m5_r * 2 + 0.3;
     mount_rails_d = 6.4;
@@ -54,24 +52,20 @@ module mount_4020(wall_thick){
         union() {
             // mount ridge
             cube([board_h + plate_extra_h, wall_thick, 40]);
-            translate([0, 2.7, rail1_offset + m5_r])
-                rotate([0, 90, 0]){
-                    translate([-3.3,-3,0])
-                    cube([mount_rails_d, 5, board_h + plate_extra_h]);
-                }
-                    //cylinder(d=mount_rails_d, h=plate_extra_h + 10, $fn=6);
-            // mount ridge
-            translate([0, 2.7, rail2_offset + m5_r])
-                rotate([0, 90, 0])
-                    translate([-3.3,-3,0])
-                        cube([mount_rails_d, 5, board_h + 10]);
-                    //cylinder(d=mount_rails_d, h=board_h + 10, $fn=6);
+            // ALU 2020 bottom rail
+            translate([0,0, 20])
+                rotate([180, 90, 90])
+                    alu_connector(board_h + plate_extra_h, 0);
+            // ALU 2020 top rail
+            translate([0,0, 40])
+                rotate([180, 90, 90])
+                    alu_connector(board_h + plate_extra_h, 0);
             // Connector to the rest of the board
             translate([0,5,5])
                 rotate([-45, 0, 0])cube([board_h + plate_extra_h, 7, 5]);
         }
-        // mounting holes to 2040 rail
-        translate([25, wall_thick + m5_bolt_offset, rail2_offset + m5_r] ){
+        // mounting holes to 2040 rail top
+        translate([25, wall_thick + m5_bolt_offset, 30] ){
             rotate([90, 0, 0])
                 hole_w_end(
                     M_DIM[5][4] + m5_head_len_offset + 4,
@@ -80,8 +74,8 @@ module mount_4020(wall_thick){
                     m5_d,
                     flip=true);
         }
-
-        translate([25, wall_thick + m5_head_len_offset + m5_bolt_offset + 2, z_offset]){
+        // mounting holes to 2040 rail bottom
+        translate([25, wall_thick + m5_head_len_offset + m5_bolt_offset + 2, 10]){
             rotate([90, 0, 0])
                 hole_w_end(
                     wall_thick + m5_head_len_offset * 2 + m5_bolt_offset,
@@ -90,15 +84,15 @@ module mount_4020(wall_thick){
                     m5_d,
                     flip=true);
         }
-
-        translate([second_2040_mount, wall_thick + m5_bolt_offset, rail2_offset + m5_r]){
+        // mounting holes to 2040 rail top
+        translate([second_2040_mount, wall_thick + m5_bolt_offset, 30]){
             rotate([90, 0, 0])
                 hole_w_end(wall_thick+5+m5_bolt_offset, 5, "round", m5_d, flip=true);
         }
+        // mounting holes to 2040 rail bottom
         translate([
             second_2040_mount,
-            wall_thick + m5_head_len_offset + m5_bolt_offset + 2,
-            z_offset]){
+            wall_thick + m5_head_len_offset + m5_bolt_offset + 2, 10]){
                 rotate([90, 0, 0])
                     hole_w_end(
                         wall_thick + m5_head_len_offset * 2 + m5_bolt_offset,

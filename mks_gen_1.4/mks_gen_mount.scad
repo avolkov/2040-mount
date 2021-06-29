@@ -50,5 +50,5 @@ difference(){
     wall_thick = 9;
     mount_4020(wall_thick);
     translate([0, -1, 36])
-        fan_mount(wall_thick, 2);
+        fan_mount(wall_thick, extra_nut_len=2);
 }
