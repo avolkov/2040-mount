@@ -15,7 +15,7 @@ module bottom_wire_holder(){
     outer_d = 20;
     vert_pipe_offset = 65;
     vert_pipe_len = 40;
-    heated_bed_connector = 205;
+    heated_bed_connector = 120;
     bottom_shave_offset = 2;
     difference(){
         union(){
@@ -47,7 +47,7 @@ module bottom_wire_holder(){
                 }
             }
             */
-            translate([36, 6, -outer_d/2 + 2])
+            translate([36, 7, -outer_d/2 + 2])
                 plate_mount(14, 3);
         }
         // horizontal cutout
