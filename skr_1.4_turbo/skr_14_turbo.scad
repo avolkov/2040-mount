@@ -39,8 +39,10 @@ difference(){
 }
 difference(){
     wall_thick = 9;
+    blocking_rail_offset=2;
     mount_4020(wall_thick);
-    translate([0, -1, 36])
-        fan_mount(wall_thick, 2);
+    translate([0, -1 - blocking_rail_offset, 36])
+        fan_mount(wall_thick + blocking_rail_offset,
+            extra_nut_len=2 + blocking_rail_offset);
 }
 
