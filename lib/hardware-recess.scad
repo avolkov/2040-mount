@@ -82,9 +82,21 @@ module make_recess(height, end_type, head_d){
     }
 }
 
+module grade_end(hole_len, trap_height, type, bolt_d){
+    // Grade between hex hole and bolt hole for better printing
+    hull(){
+        make_recess(trap_height, type, get_trap_d(type, bolt_d));
+        translate([0,0,trap_height+0.9])
+            cylinder(h=0.1, d=M_DIM[bolt_d][0], $fn=20);
+    }
+    translate([0,0,trap_height+1])
+        cylinder(h=hole_len-trap_height, d=M_DIM[bolt_d][0], $fn=20);
+
+}
+
 
 // There's a bug in this function when it comes to calculation trap len /bolt len
-module hole_w_end(hole_len, trap_height, type, bolt_d, flip=false){
+module hole_w_end(hole_len, trap_height, type, bolt_d, flip=false, grade=false){
     /*
     Make a hole with an end for bolt or a nut.
     This is a more generic functions replacing m5_ hole-making functions.
@@ -95,14 +107,18 @@ module hole_w_end(hole_len, trap_height, type, bolt_d, flip=false){
     if (type != "none"){
         cylinder(h=hole_len-trap_height, d=M_DIM[bolt_d][0], $fn=20);
         if (flip){
+            if(grade){
+                //Round up ceiling where 
+                grade_end(hole_len, trap_height, type, bolt_d);
+            } else {
             make_recess(trap_height, type, get_trap_d(type, bolt_d));
             translate([0,0,trap_height])
                 cylinder(h=hole_len-trap_height, d=M_DIM[bolt_d][0], $fn=20);
-
+            }
         } else {
-                translate([0,0, hole_len])
-                    rotate([0,180,0])
-                        make_recess(trap_height, type, get_trap_d(type, bolt_d));
+            translate([0,0, hole_len])
+                rotate([0,180,0])
+                    make_recess(trap_height, type, get_trap_d(type, bolt_d));
         }
     } else {
         cylinder(h=hole_len, d=bolt_d);
