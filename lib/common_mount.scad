@@ -123,13 +123,13 @@ module mount_board(mount_offset){
         translate([0, 2, 0]){
             // mounting holes for the board
             translate([8, mount_offset, 0])
-                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][1], flip=true, grade=true);
+                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][0], flip=true, grade=true);
             translate([mount_h + 8, mount_offset, 0])
-                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][1], flip=true, grade=true);
+                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][0], flip=true, grade=true);
             translate([8, mount_offset + mount_w, 0])
-                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][1], flip=true, grade=true);
+                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][0], flip=true, grade=true);
             translate([mount_h + 8, mount_offset + mount_w, 0])
-                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][1], flip=true, grade=true);
+                hole_w_end(peg_h, M_DIM[3][4], "hex", M_DIM[3][0], flip=true, grade=true);
 
         }
     }
