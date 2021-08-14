@@ -13,29 +13,29 @@ module board_5x7_mount(bolt_l){
     y_dim = 65;
     const_offset = 9.5;
     translate([daughter_board_offset, const_offset, 0])
-        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
+        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][0]);
     translate([daughter_board_offset, const_offset + y_dim, 0])
-        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
+        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][0]);
     translate([daughter_board_offset + x_dim, const_offset, 0])
-        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
+        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][0]);
     translate([daughter_board_offset + x_dim, const_offset + y_dim, 0])
-        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
+        hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][0]);
 }
 
 
 module mount_holes(bolt_l){
-    hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
-    translate([0, 20, 0]) hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][1]);
+    hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][0]);
+    translate([0, 20, 0]) hole_w_end(bolt_l, M_DIM[3][4], "round", M_DIM[3][0]);
 }
 
 module fan_mount(bolt_l, extra_nut_len=0){
     rotate([270, 0, 0]){
         translate([13, 0,1])
-            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M3, flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][0], flip=true);
         translate([55, 0,1])
-            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M3, flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][0], flip=true);
         translate([95, 0,1])
-            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M3, flip=true);
+            hole_w_end(bolt_l, M_DIM[3][4]+extra_nut_len, "hex", M_DIM[3][0], flip=true);
     }
 }
 
