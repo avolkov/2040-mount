@@ -9,6 +9,7 @@
  * License: Attribution-ShareAlike 4.0 International (CC BY-SA)
  * https://creativecommons.org/licenses/by-sa/4.0/
  *
+ * Version 0.3 2021-08-14 Added gradation when making hole_w_end to reduce overhangs
  * Version 0.2 2021-05-26 Refactoring variables into M_DIM list
  * Version 0.1 2021-04-05 Initial publication
  */
@@ -105,6 +106,8 @@ module hole_w_end(hole_len, trap_height, type, bolt_d, flip=false, grade=false){
 
     :bolt_d: bolt diameter, i.e. 3, 5 mm
     :type: type of the head hole: 'none', 'hex', 'round'
+    
+    Grade for non-filip bot/nut ends not implemented yet
     */
     if (type != "none"){
         cylinder(h=hole_len-trap_height, d=M_DIM[bolt_d][0], $fn=20);
