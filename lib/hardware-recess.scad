@@ -83,17 +83,19 @@ module make_recess(height, end_type, head_d){
 }
 
 module grade_end(hole_len, trap_height, type, bolt_d){
-    // Grade between hex hole and bolt hole for better printing
+    /*
+     * Grade between hex hole and bolt hole when bigger hole is on the bottom
+     * This reduces overhangs
+     */
+
     hull(){
-        make_recess(trap_height, type, get_trap_d(type, bolt_d));
-        translate([0,0,trap_height+0.9])
+        make_recess(trap_height - 0.4, type, get_trap_d(type, bolt_d));
+        translate([0,0,trap_height+0.5])
             cylinder(h=0.1, d=M_DIM[bolt_d][0], $fn=20);
     }
-    translate([0,0,trap_height+1])
+    translate([0,0,trap_height+0.5])
         cylinder(h=hole_len-trap_height, d=M_DIM[bolt_d][0], $fn=20);
-
 }
-
 
 // There's a bug in this function when it comes to calculation trap len /bolt len
 module hole_w_end(hole_len, trap_height, type, bolt_d, flip=false, grade=false){
