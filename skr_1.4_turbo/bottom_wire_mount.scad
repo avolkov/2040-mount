@@ -13,10 +13,10 @@ include <../lib/common_wire_mount.scad>
 module bottom_wire_holder(){
     inner_pipe_d = 12;
     outer_d = 20;
-    vert_pipe_offset = 70;
+    vert_pipe_offset = 75;
     vert_pipe_len = 40;
-    heated_bed_connector = 160;
-    heated_bed_conn_offset = 20;
+    heated_bed_connector = 120;
+    heated_bed_conn_offset = 30;
     bottom_shave_offset = 2;
     difference(){
         union(){
@@ -25,18 +25,20 @@ module bottom_wire_holder(){
                     heated_bed_connector - heated_bed_conn_offset,
                     outer_d,
                     inner_pipe_d);
-            translate([heated_bed_connector - 12, 0, 0])
-                cable_mount(2, outer_d+2, inner_pipe_d);
-            translate([heated_bed_connector - 2 , 0, 0])
-                cable_mount(2, outer_d+2, inner_pipe_d);
+            for(i=[2:10:32]){
+                translate([heated_bed_connector - i, 0, 0])
+                    cable_mount(2, outer_d+2, inner_pipe_d);
+                translate([heated_bed_connector - i , 0, 0])
+                    cable_mount(2, outer_d+2, inner_pipe_d);
+            }
             // vertical pipe #1
             translate([vert_pipe_offset, 0 , 0]){
                 rotate([0,0,270]){
                     cable_mount(vert_pipe_len, outer_d , inner_pipe_d);
-                    translate([28, 0, 0])
-                        cable_mount(2, outer_d + 3, inner_pipe_d + 5);
-                    translate([22, 0, 0])
-                        cable_mount(2, outer_d + 3, inner_pipe_d + 5);
+                    for (i=[19:6:39]){
+                        translate([i, 0, 0])
+                            cable_mount(2, outer_d + 3, inner_pipe_d + 5);
+                    }
                 }
             }
             translate([36, 6, -outer_d/2 + 2])
