@@ -25,7 +25,7 @@ module top_wire_holder(out_d, in_d){
                 rotate([0, 0, 90])
                     cable_mount(40, out_d, in_d);
             rotate([0,0,270]){
-                for(i=[5:8:3]){
+                for(i=[5:8:36]){
                     translate([i, 20, 0])
                         cable_mount(2, out_d + 3, in_d);
                 }
