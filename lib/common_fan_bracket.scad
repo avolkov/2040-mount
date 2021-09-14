@@ -33,7 +33,7 @@ module bottom_bracket(mount_offset, bolt_cutout_1, bolt_cutout_2, fan_count=3, )
             translate([0,-2, 0])
                 cube([mount_len, 2, 12]);
         }
-        translate([0, M[3][0] - 1, 0])
+        translate([0, M_DIM[3][0] - 1, 0])
             bracket_mount(5, mount_offset - 6);
         if (fan_count > 0)
             fan_mount(mount_offset);
@@ -42,9 +42,9 @@ module bottom_bracket(mount_offset, bolt_cutout_1, bolt_cutout_2, fan_count=3, )
         if (fan_count > 2)
             translate([79, 0, 0])fan_mount(mount_offset);
         if (bolt_cutout_1)
-            translate(bolt_cutout_1)cylinder(d=m5_bolt_head_d + 2, h=5);
+            translate(bolt_cutout_1)cylinder(d=M_DIM[5][1] + 2, h=5);
         if (bolt_cutout_2)
-            translate(bolt_cutout_2)cylinder(d=m5_bolt_head_d + 2, h=5);
+            translate(bolt_cutout_2)cylinder(d=M_DIM[5][1] + 2, h=5);
     }
 }
 
