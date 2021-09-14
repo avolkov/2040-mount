@@ -11,7 +11,7 @@ module bracket_mount(bolt_l, mount_offset){
         translate([95, y_offset,0]) hole_w_end(bolt_l+0.5, M_DIM[M3][3], "round", M_DIM[M3][0]);
 }
 
-module fan_mount(duct_len){
+module bracket_fan_mount(duct_len){
     translate([8, 0, 8])
             rotate([90,0,0])
                 cylinder(d=M_DIM[M3][0], h=5);
@@ -29,18 +29,18 @@ module bottom_bracket(mount_offset, bolt_cutout_1, bolt_cutout_2, fan_count=3, )
     //mount_offset --  Offset between board mounting screws and board for mounting fans
     difference(){
         union(){
-            cube([mount_len, mount_offset, 5]);
+            cube([$mount_len, mount_offset, 5]);
             translate([0,-2, 0])
                 cube([mount_len, 2, 12]);
         }
         translate([0, M_DIM[3][0] - 1, 0])
             bracket_mount(5, mount_offset - 6);
         if (fan_count > 0)
-            fan_mount(mount_offset);
+            bracket_fan_mount(mount_offset);
         if (fan_count > 1)
-            translate([39, 0, 0])fan_mount(mount_offset);
+            translate([39, 0, 0])bracket_fan_mount(mount_offset);
         if (fan_count > 2)
-            translate([79, 0, 0])fan_mount(mount_offset);
+            translate([79, 0, 0])bracket_fan_mount(mount_offset);
         if (bolt_cutout_1)
             translate(bolt_cutout_1)cylinder(d=M_DIM[5][1] + 2, h=5);
         if (bolt_cutout_2)
@@ -55,7 +55,7 @@ module top_bracket() {
     difference(){
         cube([55, 2, 13]);
         translate([3,5, -1])
-            fan_mount(0);
+            bracket_fan_mount(0);
         translate([4, 5, 7])
             rotate([90, 0, 0])
                 cylinder(d=M_DIM[M3][0], h=5);
