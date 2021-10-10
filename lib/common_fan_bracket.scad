@@ -5,10 +5,9 @@ fan_d=35;
 
 module bracket_mount(bolt_l, mount_offset){
         y_offset = mount_offset + 0.3;
-        translate([13, y_offset, 0])hole_w_end(bolt_l+0.5, M_DIM[M3][3], "round", M_DIM[M3][0]);
-        //translate([13, mount_offset,0]) cylinder(d=m3_d, h=bolt_l);
-        translate([55, y_offset,0]) hole_w_end(bolt_l+0.5, M_DIM[M3][3], "round", M_DIM[M3][0]);
-        translate([95, y_offset,0]) hole_w_end(bolt_l+0.5, M_DIM[M3][3], "round", M_DIM[M3][0]);
+        translate([13, y_offset, 0])hole_w_end(bolt_l+0.5, 2, "round", M_DIM[M3][0]);
+        translate([55, y_offset,0]) hole_w_end(bolt_l+0.5, 2, "round", M_DIM[M3][0]);
+        translate([95, y_offset,0]) hole_w_end(bolt_l+0.5, 2, "round", M_DIM[M3][0]);
 }
 
 module bracket_fan_mount(duct_len){
@@ -34,7 +33,7 @@ module bottom_bracket(mount_offset, bolt_cutout_1, bolt_cutout_2, fan_count=3, )
                 cube([mount_len, 2, 12]);
         }
         translate([0, M_DIM[3][0] - 1, 0])
-            bracket_mount(5, mount_offset - 6);
+            bracket_mount(5, mount_offset - 6 );
         if (fan_count > 0)
             bracket_fan_mount(mount_offset);
         if (fan_count > 1)
