@@ -30,16 +30,14 @@ module bottom_bracket(mount_offset, bolt_cutout_1, bolt_cutout_2, fan_count=3, )
         union(){
             cube([$mount_len, mount_offset, 5]);
             translate([0,-2, 0])
-                cube([mount_len, 2, 12]);
+                cube([$mount_len, 2, 12]);
         }
         translate([0, M_DIM[3][0] - 1, 0])
             bracket_mount(5, mount_offset - 6 );
-        if (fan_count > 0)
-            bracket_fan_mount(mount_offset);
-        if (fan_count > 1)
-            translate([39, 0, 0])bracket_fan_mount(mount_offset);
-        if (fan_count > 2)
-            translate([79, 0, 0])bracket_fan_mount(mount_offset);
+        for (i = [0 : fan_count - 1]){
+            translate([-4 + 40.5 * i, 0, 0])
+                bracket_fan_mount(mount_offset);
+        };
         if (bolt_cutout_1)
             translate(bolt_cutout_1)cylinder(d=M_DIM[5][1] + 2, h=5);
         if (bolt_cutout_2)
@@ -53,12 +51,12 @@ module top_bracket() {
     bottom_offset = 5;
     difference(){
         cube([55, 2, 13]);
-        translate([3,5, -1])
+        translate([3, 5, -1])
             bracket_fan_mount(0);
-        translate([4, 5, 7])
+        translate([2.5, 5, 7])
             rotate([90, 0, 0])
                 cylinder(d=M_DIM[M3][0], h=5);
-        translate([51, 5, 7])
+        translate([51.5, 5, 7])
             rotate([90, 0, 0])
                 cylinder(d=M_DIM[M3][0], h=5);
     }
