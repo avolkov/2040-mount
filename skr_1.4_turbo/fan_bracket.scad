@@ -17,4 +17,4 @@ module bb(){
     bottom_bracket(15, [22, 18, 0], [second_2040_mount, 19, 0]);
 }
 
-bb();
+//bb();

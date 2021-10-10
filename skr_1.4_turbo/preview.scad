@@ -1,25 +1,17 @@
 
-//include <variables.scad>
+include <variables.scad>
 include <fan_bracket.scad>;
 use <fan_bracket.scad>;
-
-bb();
-
-
-//include <../lib/common_fan_bracket.scad>
-//include <../lib/common_mount.scad>
-
-
-
-//include <skr_14_turbo.scad>;
-//use <skr_14_turbo.scad>;
+include <skr_14_turbo.scad>;
 
 
 
 
+skr_mount();
+translate([0, 8, 47.5])
+    rotate([270, 0, 0]) bb();
 
 
 
-//skr_mount();
 
 
